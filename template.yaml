@@ -4,8 +4,7 @@ Description: AWS Serverless Quarkus HTTP - quarkus-aws-lambda-rest-1.0-SNAPSHOT
 Globals:
   Api:
     EndpointConfiguration: REGIONAL
-    BinaryMediaTypes:
-      - "*/*"
+
 
 Resources:
   QuarkusAwsLambdaRest:
@@ -19,6 +18,8 @@ Resources:
         - AWSLambdaBasicExecutionRole
         - DynamoDBCrudPolicy:
             TableName: !Ref NoteDDBTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref CommentDDBTable
       Timeout: 150
       Events:
         GetResource:
@@ -31,6 +32,13 @@ Resources:
     Type: AWS::Serverless::SimpleTable
     Properties:
       TableName: Note
+      PrimaryKey:
+        Name: id
+        Type: Number
+  CommentDDBTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName: Comment
       PrimaryKey:
         Name: id
         Type: Number

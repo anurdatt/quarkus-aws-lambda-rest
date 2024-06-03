@@ -47,14 +47,18 @@ public class NoteService {
 
         PageIterable<Note> pagedResults = noteTable.scan(request);
 
-        List<Page> pages = new ArrayList<>();
+//        List<Page> pages = new ArrayList<>();
 //        noteTable.scan(request).stream()
 //                .peek(p -> logger.info("Items in page : " + p.count()))
 //                .forEach(p -> pages.add(p));
 
+        List<Note> noteList = new ArrayList<>();
         pagedResults.stream()
                 .peek(p -> logger.info("Items in page : " + p.count()))
-                .forEach(p -> pages.add(p));
+                .forEach(p -> noteList.addAll(p.items()));
+
+        int totalElements = noteList.size();
+        logger.info("total elements: = " + totalElements);
 
         List<Page> sortedPages = new ArrayList<>();
 
@@ -69,17 +73,17 @@ public class NoteService {
         if (dir.equalsIgnoreCase("desc"))
             byKey = byKey.reversed();
 
-        int totalElements = 0;
-        for (int i=0; i<pages.size(); i++) {
-            if(pages.get(i).count() == 0) continue;
-            totalElements += pages.get(i).count();
+        int p=0;
+        for (; p<totalElements/pageSize; p++) {
             sortedPages.add(Page.builder(Note.class)
-                    .items(pagedResults.items()
-                            .stream().sorted(byKey)
-                            .collect(Collectors.toList()).subList(i*pageSize, i*pageSize + pages.get(i).count()))
+                    .items(noteList.stream().sorted(byKey)
+                            .collect(Collectors.toList()).subList(p*pageSize, p*pageSize + pageSize))
                     .build());
         }
-        logger.info("total elements: = " + totalElements);
+        sortedPages.add(Page.builder(Note.class)
+                .items(noteList.stream().sorted(byKey)
+                        .collect(Collectors.toList()).subList(p*pageSize, p*pageSize + totalElements%pageSize))
+                .build());
 
         int totalPages = sortedPages.size();
         logger.info("total pages: = " + totalPages);
