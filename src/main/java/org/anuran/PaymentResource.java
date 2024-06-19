@@ -1,6 +1,7 @@
 package org.anuran;
 
 import io.quarkus.rest.client.reactive.QuarkusRestClientBuilder;
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -18,20 +19,27 @@ import java.net.URI;
 
 @Path("/api/payments")
 public class PaymentResource {
+//    @ConfigProperty(name = "rzp.url", defaultValue = "https://api.razorpay.com/v1")
+    private String rzpUrl; //= "https://api.razorpay.com/v1";
 
-//    @Inject
-//    @RestClient
-    private final RazorpayRestClientService razorpayRestClientService;
+    @Inject
+    @RestClient
+    private RazorpayRestClientService razorpayRestClientService;
 
 
-//    @ConfigProperty(name = "RZP_URL", defaultValue = "https://api.razorpay.com/v1")
-    private String rzpUrl = "https://api.razorpay.com/v1";
+
     public PaymentResource() {
-        razorpayRestClientService = QuarkusRestClientBuilder.newBuilder()
-                .baseUri(URI.create(rzpUrl))
-                .clientHeadersFactory(ClientHeaderParam.)
-                .build(RazorpayRestClientService.class);
+
     }
+
+//    @PostConstruct
+//    private void init() {
+//        razorpayRestClientService = QuarkusRestClientBuilder.newBuilder()
+//                .baseUri(URI.create(this.rzpUrl))
+//                .build(RazorpayRestClientService.class);
+//    }
+
+
 
 //    @GET
 //    @Path("/orders")

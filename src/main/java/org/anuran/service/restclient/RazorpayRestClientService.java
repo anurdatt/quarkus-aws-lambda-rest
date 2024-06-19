@@ -8,7 +8,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 
 @Path("/orders")
-@RegisterRestClient
+@RegisterRestClient(configKey = "razorpay-api")
 public interface RazorpayRestClientService {
     @POST
     RzpCreateOrderResponse createOrder(RzpCreateOrderRequest request);
