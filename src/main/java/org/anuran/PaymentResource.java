@@ -1,5 +1,6 @@
 package org.anuran;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import io.quarkus.rest.client.reactive.QuarkusRestClientBuilder;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -58,7 +59,16 @@ public class PaymentResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public RzpCreateOrderResponse createOrder(RzpCreateOrderRequest request) {
-        return razorpayRestClientService.createOrder(request);
+        JsonNode jsonNodeResponse = razorpayRestClientService.createOrder(request);
+
+        RzpCreateOrderResponse response = new RzpCreateOrderResponse();
+        response.setAmount(jsonNodeResponse.get("amount").asDouble());
+        response.setAmountDue(jsonNodeResponse.get("amount_due").asDouble());
+        response.setAmountPaid(jsonNodeResponse.get("amount_paid").asDouble());
+        response.setOrderId(jsonNodeResponse.get("id").asText());
+        response.setReceiptId(jsonNodeResponse.get("receipt").asText());
+
+        return response;
     }
 
 }

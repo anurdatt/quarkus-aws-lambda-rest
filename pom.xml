@@ -7,17 +7,17 @@
   <version>1.0-SNAPSHOT</version>
   <properties>
     <assembly-plugin.version>3.1.0</assembly-plugin.version>
-    <compiler-plugin.version>3.11.0</compiler-plugin.version>
+    <compiler-plugin.version>3.12.1</compiler-plugin.version>
     <maven.compiler.parameters>true</maven.compiler.parameters>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <quarkus-plugin.version>3.6.6</quarkus-plugin.version>
+    <quarkus-plugin.version>3.10.0</quarkus-plugin.version>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-    <quarkus.platform.version>3.6.6</quarkus.platform.version>
-    <surefire-plugin.version>3.1.2</surefire-plugin.version>
+    <quarkus.platform.version>3.10.0</quarkus.platform.version>
+    <surefire-plugin.version>3.2.5</surefire-plugin.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -70,6 +70,15 @@
 <!--      <groupId>io.quarkus</groupId>-->
 <!--      <artifactId>quarkus-resteasy-jackson</artifactId>-->
 <!--    </dependency>-->
+    <dependency>
+    <groupId>io.quarkus</groupId>
+    <artifactId>quarkus-rest-client</artifactId>
+  </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.microprofile.rest.client</groupId>
+      <artifactId>microprofile-rest-client-api</artifactId>
+    </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-resteasy-reactive</artifactId>
