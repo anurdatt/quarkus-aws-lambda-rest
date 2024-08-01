@@ -11,7 +11,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: io.quarkus.amazon.lambda.runtime.QuarkusStreamHandler::handleRequest
-      Runtime: java11
+      Runtime: java17
       CodeUri: target/function.zip
       MemorySize: 2048
       Policies:
